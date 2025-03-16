@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { GoogleAnalytics } from "@/lib/analytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -70,7 +73,6 @@ export const metadata = {
   category: "technology",
 };
 
-// You can also add JSON-LD structured data
 export const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -98,12 +100,15 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
