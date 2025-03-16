@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { GoogleAnalytics } from "@/lib/analytics";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,77 +17,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: {
-    default: "Smart Web by Visdak",
-    template: "%s | Smart Web",
-  },
-  description: "Professional web solutions for modern businesses",
-  keywords: ["web development", "business website", "professional web design"],
-  authors: [{ name: "Visdak" }],
-  creator: "Visdak",
-  metadataBase: new URL("https://your-domain.com"),
+  ...siteConfig.metadata,
+  metadataBase: new URL(siteConfig.url),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://your-domain.com",
-    title: "Smart Web by Visdak",
-    description: "Professional web solutions for modern businesses",
-    siteName: "Smart Web",
-    images: [
-      {
-        url: "https://your-domain.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Smart Web by Visdak",
-      },
-    ],
+    url: siteConfig.url,
+    title: siteConfig.metadata.title.default,
+    description: siteConfig.metadata.description,
+    siteName: siteConfig.name,
+    images: [{ url: siteConfig.ogImage }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Web by Visdak",
-    description: "Professional web solutions for modern businesses",
-    creator: "@visdak",
-    images: ["https://your-domain.com/og-image.jpg"],
+    title: siteConfig.metadata.title.default,
+    description: siteConfig.metadata.description,
+    images: [siteConfig.ogImage],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  alternates: {
-    canonical: "https://your-domain.com",
-    languages: {
-      "en-US": "https://your-domain.com",
-    },
-  },
-  verification: {
-    google: "your-google-verification-code",
-    yandex: "your-yandex-verification-code",
-    yahoo: "your-yahoo-verification-code",
-  },
-  category: "technology",
 };
 
 export const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Smart Web by Visdak",
-  url: "https://your-domain.com",
-  logo: "https://your-domain.com/logo.png",
-  sameAs: [
-    "https://twitter.com/visdak",
-    "https://linkedin.com/company/visdak",
-    "https://github.com/visdak",
-  ],
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/logo.png`,
+  sameAs: Object.values(siteConfig.links),
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+1-123-456-7890",
+    telephone: siteConfig.contact.phone,
     contactType: "customer service",
     availableLanguage: ["English"],
   },
@@ -100,7 +59,7 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
+        <GoogleAnalytics measurementId={siteConfig.analytics.googleId} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}

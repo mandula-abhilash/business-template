@@ -5,13 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Contact", href: "/contact" },
-];
+import { navigationLinks, siteConfig } from "@/config/site";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,7 +18,7 @@ export function Header() {
       >
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5 text-2xl font-bold">
-            Smart Web
+            {siteConfig.name}
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -38,7 +32,7 @@ export function Header() {
           </Button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
+          {navigationLinks.map((item) => (
             <Link
               key={item.name}
               href={item.href}
@@ -63,7 +57,7 @@ export function Header() {
           <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border/10">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5 text-2xl font-bold">
-                Smart Web
+                {siteConfig.name}
               </Link>
               <Button
                 variant="ghost"
@@ -77,7 +71,7 @@ export function Header() {
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-border">
                 <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
+                  {navigationLinks.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
