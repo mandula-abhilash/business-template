@@ -6,14 +6,19 @@ import { GoogleAnalytics } from "@/lib/analytics";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
+// Optimize font loading
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata = {
@@ -53,17 +58,21 @@ export const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <GoogleAnalytics measurementId={siteConfig.analytics.googleId} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}
-      >
+      <body className="antialiased min-h-screen bg-background text-foreground flex flex-col">
         <ThemeProvider>
           <Header />
           <main className="flex-1 pt-[88px]">{children}</main>
