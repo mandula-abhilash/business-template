@@ -21,14 +21,16 @@ export function Header() {
         <div className="flex lg:flex-1">
           <Link
             href="/"
-            className="-m-1.5 p-1.5 flex items-center gap-2 hover:opacity-80 transition-opacity"
+            className="-m-1.5 p-1.5 inline-flex items-center hover:opacity-80 transition-opacity"
           >
-            <div className="rounded-lg bg-primary p-2 text-primary-foreground">
-              <Globe className="h-6 w-6" />
+            <div className="flex items-center">
+              <div className="rounded-lg bg-primary p-2 text-primary-foreground">
+                <Globe className="h-6 w-6" />
+              </div>
+              <span className="ml-3 text-3xl font-bold tracking-tight">
+                {siteConfig.name}
+              </span>
             </div>
-            <span className="text-3xl font-bold tracking-tight">
-              {siteConfig.name}
-            </span>
           </Link>
         </div>
 
@@ -83,15 +85,17 @@ export function Header() {
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="-m-1.5 p-1.5 flex items-center gap-2"
+              className="-m-1.5 p-1.5 inline-flex items-center"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <div className="rounded-lg bg-primary p-2 text-primary-foreground">
-                <Globe className="h-6 w-6" />
+              <div className="flex items-center">
+                <div className="rounded-lg bg-primary p-2 text-primary-foreground">
+                  <Globe className="h-6 w-6" />
+                </div>
+                <span className="ml-3 text-xl font-bold tracking-tight">
+                  {siteConfig.name}
+                </span>
               </div>
-              <span className="text-xl font-bold tracking-tight">
-                {siteConfig.name}
-              </span>
             </Link>
             <Button
               variant="ghost"
