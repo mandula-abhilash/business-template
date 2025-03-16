@@ -23,14 +23,8 @@ const nextConfig = {
   // Enable React strict mode for better performance and debugging
   reactStrictMode: true,
 
-  // Optimize production builds
-  swcMinify: true,
-
   // Enable compression
   compress: true,
-
-  // Optimize fonts
-  optimizeFonts: true,
 
   // Reduce bundle size in production
   webpack: (config, { dev, isServer }) => {
@@ -59,6 +53,18 @@ const nextConfig = {
       };
     }
     return config;
+  },
+
+  // Experimental features
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+    turbo: {
+      loaders: {
+        // Changed from boolean to array
+        "@next/font/google": ["@next/font/google"],
+      },
+      // Removed rules section that was causing issues
+    },
   },
 };
 
