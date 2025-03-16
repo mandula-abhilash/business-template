@@ -129,6 +129,7 @@ export default function About() {
                     src={member.image}
                     alt={member.name}
                     fill
+                    sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 300px"
                     className="rounded-full object-cover"
                   />
                 </div>

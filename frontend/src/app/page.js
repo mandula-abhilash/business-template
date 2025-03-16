@@ -36,13 +36,13 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
+          <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative h-[400px] w-full">
             <Image
               src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
               alt="Business team working"
-              width={800}
-              height={600}
-              className="rounded-2xl shadow-2xl"
+              className="rounded-2xl shadow-2xl object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               priority
             />
           </div>
