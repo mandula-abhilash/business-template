@@ -5,7 +5,7 @@ import { features, siteConfig } from "@/config/site";
 
 export default function Home() {
   return (
-    <div className="relative isolate">
+    <div className="relative">
       {/* Hero section */}
       <div className="relative pt-14">
         <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
@@ -35,7 +35,7 @@ export default function Home() {
       </div>
 
       {/* Features section */}
-      <div className="py-24 sm:py-32">
+      <div className="relative z-10 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-base font-semibold leading-7 text-primary">
