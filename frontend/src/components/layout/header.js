@@ -2,7 +2,7 @@
 
 import { Menu, X, Globe } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { navigationLinks, siteConfig } from "@/config/site";
@@ -12,8 +12,20 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mobileMenuOpen]);
+
   return (
-    <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-50 w-full border-b border-border">
+    <header className="fixed inset-x-0 top-0 z-[100] bg-background/80 backdrop-blur-sm border-b border-border">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -23,11 +35,11 @@ export function Header() {
             href="/"
             className="-m-1.5 p-1.5 inline-flex items-center hover:opacity-80 transition-opacity"
           >
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
               <div className="rounded-lg bg-primary p-2 text-primary-foreground">
                 <Globe className="h-6 w-6" />
               </div>
-              <span className="ml-3 text-3xl font-bold tracking-tight">
+              <span className="text-xl font-bold tracking-tight">
                 {siteConfig.name}
               </span>
             </div>
@@ -72,15 +84,26 @@ export function Header() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu dialog */}
       <div
-        className={`lg:hidden ${
-          mobileMenuOpen ? "fixed inset-0 z-50" : "hidden"
+        className={`fixed inset-0 z-[110] transform transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        role="dialog"
-        aria-modal="true"
       >
-        <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border/10">
+        {/* Backdrop */}
+        <div
+          className={`fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-300 ${
+            mobileMenuOpen ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+
+        {/* Menu panel */}
+        <div
+          className="fixed inset-y-0 right-0 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-border/10"
+          role="dialog"
+          aria-modal="true"
+        >
           {/* Mobile menu header */}
           <div className="flex items-center justify-between">
             <Link
@@ -88,11 +111,11 @@ export function Header() {
               className="-m-1.5 p-1.5 inline-flex items-center"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <div className="flex items-center">
+              <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-primary p-2 text-primary-foreground">
                   <Globe className="h-6 w-6" />
                 </div>
-                <span className="ml-3 text-xl font-bold tracking-tight">
+                <span className="text-xl font-bold tracking-tight">
                   {siteConfig.name}
                 </span>
               </div>
