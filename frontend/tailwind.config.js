@@ -17,7 +17,7 @@ module.exports = {
     extend: {
       colors: {
         border: "var(--border)",
-        input: "var(--border)",
+        input: "var(--input)",
         ring: "var(--ring)",
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -28,6 +28,10 @@ module.exports = {
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
         muted: {
           DEFAULT: "var(--muted)",
