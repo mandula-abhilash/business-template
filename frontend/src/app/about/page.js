@@ -58,7 +58,7 @@ export default function About() {
           </div>
 
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4">
+            <div className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4">
               {companyValues.map((value) => {
                 const Icon = iconMap[value.icon];
                 return (
@@ -67,18 +67,23 @@ export default function About() {
                     className="flex flex-col items-center text-center"
                   >
                     <div className="mb-6 rounded-lg bg-primary/10 p-4">
-                      <Icon className="h-6 w-6 text-primary" />
+                      <Icon
+                        className="h-6 w-6 text-primary"
+                        aria-hidden="true"
+                      />
                     </div>
-                    <dt className="text-xl font-semibold mb-4">
-                      {value.title}
-                    </dt>
-                    <dd className="text-muted-foreground">
-                      {value.description}
-                    </dd>
+                    <dl>
+                      <dt className="text-xl font-semibold mb-4">
+                        {value.title}
+                      </dt>
+                      <dd className="text-muted-foreground">
+                        {value.description}
+                      </dd>
+                    </dl>
                   </div>
                 );
               })}
-            </dl>
+            </div>
           </div>
         </div>
       </div>
@@ -92,10 +97,12 @@ export default function About() {
                 key={achievement.label}
                 className="bg-card rounded-2xl p-8 text-center shadow-lg"
               >
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {achievement.metric}
-                </div>
-                <div className="text-muted-foreground">{achievement.label}</div>
+                <dl>
+                  <dt className="text-4xl font-bold text-primary mb-2">
+                    {achievement.metric}
+                  </dt>
+                  <dd className="text-muted-foreground">{achievement.label}</dd>
+                </dl>
               </div>
             ))}
           </div>
@@ -134,25 +141,29 @@ export default function About() {
                   />
                 </div>
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold">{member.name}</h3>
-                  <p className="text-primary mt-1">{member.role}</p>
-                  <p className="mt-4 text-muted-foreground">{member.bio}</p>
+                  <dl>
+                    <dt className="text-xl font-semibold">{member.name}</dt>
+                    <dd className="text-primary mt-1">{member.role}</dd>
+                    <dd className="mt-4 text-muted-foreground">{member.bio}</dd>
+                  </dl>
                   <div className="mt-6 flex justify-center gap-4">
                     <a
                       href={member.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
+                      aria-label={`Visit ${member.name}'s LinkedIn profile`}
                     >
-                      <Linkedin className="h-5 w-5" />
+                      <Linkedin className="h-5 w-5" aria-hidden="true" />
                     </a>
                     <a
                       href={member.links.twitter}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
+                      aria-label={`Visit ${member.name}'s Twitter profile`}
                     >
-                      <Twitter className="h-5 w-5" />
+                      <Twitter className="h-5 w-5" aria-hidden="true" />
                     </a>
                   </div>
                 </div>
@@ -175,10 +186,10 @@ export default function About() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button asChild size="lg">
-                <Link href="/contact">Get in Touch</Link>
+                <Link href="/contact">Start Your Journey with Us</Link>
               </Button>
               <Button variant="outline" asChild size="lg">
-                <Link href="/services">View Services</Link>
+                <Link href="/services">View Our Complete Services</Link>
               </Button>
             </div>
           </div>

@@ -99,21 +99,23 @@ export default function Home() {
 
       <div className="relative -mt-12 sm:mt-0">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <dl className="mx-auto grid max-w-2xl grid-cols-1 py-4 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
+          <div className="mx-auto grid max-w-2xl grid-cols-1 py-4 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {memoizedData.achievements.map((achievement) => (
-              <div
+              <dl
                 key={achievement.label}
                 className="flex flex-col items-center gap-y-3 rounded-2xl bg-card p-8 text-center shadow-lg"
               >
-                <dt className="text-4xl font-semibold tracking-tight">
-                  {achievement.metric}
-                </dt>
-                <dd className="text-sm text-muted-foreground">
-                  {achievement.label}
-                </dd>
-              </div>
+                <div>
+                  <dt className="text-4xl font-semibold tracking-tight">
+                    {achievement.metric}
+                  </dt>
+                  <dd className="text-sm text-muted-foreground">
+                    {achievement.label}
+                  </dd>
+                </div>
+              </dl>
             ))}
-          </dl>
+          </div>
         </div>
       </div>
 

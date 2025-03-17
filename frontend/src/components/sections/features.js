@@ -15,18 +15,20 @@ export default function FeaturesSection({ features }) {
           </p>
         </div>
 
-        <dl className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none grid grid-cols-1 gap-12 lg:grid-cols-3">
+        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none grid grid-cols-1 gap-12 lg:grid-cols-3">
           {features.map((feature) => (
-            <div key={feature.title} className="relative">
-              <dt className="text-xl font-semibold leading-7">
-                {feature.title}
-              </dt>
-              <dd className="mt-4 text-base leading-7 text-muted-foreground">
-                {feature.description}
-              </dd>
-            </div>
+            <dl key={feature.title} className="relative">
+              <div>
+                <dt className="text-xl font-semibold leading-7">
+                  {feature.title}
+                </dt>
+                <dd className="mt-4 text-base leading-7 text-muted-foreground">
+                  {feature.description}
+                </dd>
+              </div>
+            </dl>
           ))}
-        </dl>
+        </div>
       </div>
     </div>
   );
