@@ -2,11 +2,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { GoogleAnalytics } from "@/lib/analytics";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-// Optimize font loading with display: optional for better CLS
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,7 +22,6 @@ const geistMono = Geist_Mono({
   adjustFontFallback: true,
 });
 
-// Move viewport and themeColor to their own export
 export const viewport = {
   themeColor: "#ffffff",
   width: "device-width",
@@ -33,7 +31,6 @@ export const viewport = {
   userScalable: true,
 };
 
-// Pre-compute metadata to avoid runtime computation
 export const metadata = {
   ...siteConfig.metadata,
   metadataBase: new URL(siteConfig.url),
@@ -55,7 +52,6 @@ export const metadata = {
   manifest: "/manifest.json",
 };
 
-// Pre-compute JSON-LD to avoid runtime computation
 export const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -83,22 +79,8 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Resource hints */}
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-
-        {/* PWA meta tags */}
-        <meta name="application-name" content={siteConfig.name} />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
-
-        {/* Defer non-critical scripts */}
-        <GoogleAnalytics measurementId={siteConfig.analytics.googleId} />
       </head>
       <body className="antialiased min-h-screen bg-background text-foreground flex flex-col">
         <ThemeProvider>
@@ -106,6 +88,7 @@ export default function RootLayout({ children }) {
           <main className="flex-1 pt-[88px]">{children}</main>
           <Footer />
         </ThemeProvider>
+        <GoogleAnalytics gaId={siteConfig.analytics.googleId} />
       </body>
     </html>
   );
