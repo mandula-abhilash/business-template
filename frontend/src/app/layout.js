@@ -69,6 +69,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <GoogleAnalytics measurementId={siteConfig.analytics.googleId} />
       </head>

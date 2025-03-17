@@ -26,6 +26,9 @@ const nextConfig = {
   // Enable compression
   compress: true,
 
+  // Enable source maps in production for better debugging
+  productionBrowserSourceMaps: true,
+
   // Reduce bundle size in production
   webpack: (config, { dev, isServer }) => {
     // Production optimizations only
@@ -51,6 +54,9 @@ const nextConfig = {
           },
         },
       };
+
+      // Add Terser optimization
+      config.optimization.minimize = true;
     }
     return config;
   },
@@ -60,11 +66,33 @@ const nextConfig = {
     optimizePackageImports: ["lucide-react"],
     turbo: {
       loaders: {
-        // Changed from boolean to array
         "@next/font/google": ["@next/font/google"],
       },
-      // Removed rules section that was causing issues
     },
+  },
+
+  // Security headers
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; font-src 'self' data:;",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+        ],
+      },
+    ];
   },
 };
 
