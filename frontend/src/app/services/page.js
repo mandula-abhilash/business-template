@@ -113,8 +113,8 @@ export default function Services() {
               Trusted by Businesses
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Don't just take our word for it. Here's what our clients have to
-              say.
+              Don&apos;t just take our word for it. Here&apos;s what our clients
+              have to say.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -137,7 +137,7 @@ export default function Services() {
                 </div>
                 <blockquote className="flex-1">
                   <p className="text-lg font-medium leading-8">
-                    "{testimonial.quote}"
+                    &quot;{testimonial.quote}&quot;
                   </p>
                 </blockquote>
                 <div className="mt-8 border-t border-border pt-4">

@@ -31,8 +31,8 @@ export default function About() {
               About Us
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              We're a team of passionate individuals dedicated to delivering
-              exceptional solutions and driving business success.
+              We&apos;re a team of passionate individuals dedicated to
+              delivering exceptional solutions and driving business success.
             </p>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function About() {
               Ready to Work Together?
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-              Let's discuss how we can help your business reach its full
+              Let&apos;s discuss how we can help your business reach its full
               potential.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">

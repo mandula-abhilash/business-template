@@ -1,5 +1,4 @@
 import bundleAnalyzer from "@next/bundle-analyzer";
-import withPWA from "next-pwa";
 import TerserPlugin from "terser-webpack-plugin";
 
 const withBundleAnalyzer = bundleAnalyzer({
@@ -8,14 +7,6 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable PWA
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === "development",
-  },
-
   // Enable image optimization
   images: {
     domains: ["images.unsplash.com"], // Add this line for compatibility

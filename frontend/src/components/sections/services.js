@@ -15,7 +15,7 @@ export default function ServicesSection({ services }) {
           </p>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
             Choose from our comprehensive range of services designed to help
-            your business thrive in today's competitive market.
+            your business thrive in today&apos;s competitive market.
           </p>
         </div>
 
