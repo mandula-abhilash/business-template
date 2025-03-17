@@ -29,16 +29,17 @@ export function Header() {
       <header className="fixed inset-x-0 top-0 z-[100] bg-background/80 backdrop-blur-sm border-b border-border">
         <nav
           className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-          aria-label="Global"
+          aria-label="Main navigation"
         >
           <div className="flex lg:flex-1">
             <Link
               href="/"
               className="-m-1.5 p-1.5 inline-flex items-center hover:opacity-80 transition-opacity"
+              aria-label={`${siteConfig.name} home page`}
             >
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-primary p-2 text-primary-foreground">
-                  <Globe className="h-6 w-6" />
+                  <Globe className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <span className="text-xl font-bold tracking-tight">
                   {siteConfig.name}
@@ -53,8 +54,10 @@ export function Header() {
               variant="ghost"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
               onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open main menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
-              <span className="sr-only">Open main menu</span>
               <Menu className="h-6 w-6" aria-hidden="true" />
             </Button>
           </div>
@@ -70,6 +73,7 @@ export function Header() {
                     ? "text-primary"
                     : "text-foreground hover:text-primary"
                 }`}
+                aria-current={pathname === item.href ? "page" : undefined}
               >
                 {item.name}
               </Link>
@@ -88,6 +92,10 @@ export function Header() {
 
       {/* Mobile menu dialog */}
       <div
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile menu"
         className={`fixed inset-0 z-[110] transform transition-all duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
@@ -105,8 +113,6 @@ export function Header() {
           className={`fixed inset-y-0 right-0 w-full bg-background sm:max-w-sm sm:ring-1 sm:ring-border/10 flex flex-col transform transition-transform duration-300 ease-in-out ${
             mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
-          role="dialog"
-          aria-modal="true"
         >
           {/* Mobile menu header */}
           <div className="px-6 py-6 border-b border-border">
@@ -115,10 +121,11 @@ export function Header() {
                 href="/"
                 className="-m-1.5 p-1.5 inline-flex items-center"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label={`${siteConfig.name} home page`}
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-primary p-2 text-primary-foreground">
-                    <Globe className="h-6 w-6" />
+                    <Globe className="h-6 w-6" aria-hidden="true" />
                   </div>
                   <span className="text-xl font-bold tracking-tight">
                     {siteConfig.name}
@@ -129,36 +136,38 @@ export function Header() {
                 variant="ghost"
                 className="-m-2.5 rounded-md p-2.5"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
               >
-                <span className="sr-only">Close menu</span>
                 <X className="h-6 w-6" aria-hidden="true" />
               </Button>
             </div>
           </div>
 
           {/* Mobile menu content */}
-          <div className="flex-1 overflow-y-auto px-6 py-8">
-            <div className="flex flex-col gap-4">
+          <nav className="flex-1 overflow-y-auto px-6 py-8">
+            <dl className="flex flex-col gap-4">
               {navigationLinks.map((item, index) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`rounded-lg px-3 py-2 text-base font-semibold leading-7 transform transition-all duration-300 ease-in-out ${
-                    mobileMenuOpen
-                      ? "translate-x-0 opacity-100"
-                      : "translate-x-8 opacity-0"
-                  } delay-[${index * 100}ms] ${
-                    pathname === item.href
-                      ? "bg-accent text-accent-foreground"
-                      : "hover:bg-accent hover:text-accent-foreground"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                <dt key={item.name}>
+                  <Link
+                    href={item.href}
+                    className={`rounded-lg px-3 py-2 text-base font-semibold leading-7 transform transition-all duration-300 ease-in-out ${
+                      mobileMenuOpen
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-8 opacity-0"
+                    } delay-[${index * 100}ms] ${
+                      pathname === item.href
+                        ? "bg-accent text-accent-foreground"
+                        : "hover:bg-accent hover:text-accent-foreground"
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-current={pathname === item.href ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                </dt>
               ))}
-            </div>
-          </div>
+            </dl>
+          </nav>
 
           {/* Mobile menu footer */}
           <div
