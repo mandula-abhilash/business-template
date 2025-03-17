@@ -105,14 +105,12 @@ export default function Home() {
                 key={achievement.label}
                 className="flex flex-col items-center gap-y-3 rounded-2xl bg-card p-8 text-center shadow-lg"
               >
-                <div>
-                  <dt className="text-4xl font-semibold tracking-tight">
-                    {achievement.metric}
-                  </dt>
-                  <dd className="text-sm text-muted-foreground">
-                    {achievement.label}
-                  </dd>
-                </div>
+                <dt className="text-4xl font-semibold tracking-tight">
+                  {achievement.metric}
+                </dt>
+                <dd className="text-sm text-muted-foreground">
+                  {achievement.label}
+                </dd>
               </dl>
             ))}
           </div>

@@ -145,9 +145,9 @@ export function Header() {
 
           {/* Mobile menu content */}
           <nav className="flex-1 overflow-y-auto px-6 py-8">
-            <dl className="flex flex-col gap-4">
+            <ul className="flex flex-col gap-4">
               {navigationLinks.map((item, index) => (
-                <dt key={item.name}>
+                <li key={item.name}>
                   <Link
                     href={item.href}
                     className={`rounded-lg px-3 py-2 text-base font-semibold leading-7 transform transition-all duration-300 ease-in-out ${
@@ -164,9 +164,9 @@ export function Header() {
                   >
                     {item.name}
                   </Link>
-                </dt>
+                </li>
               ))}
-            </dl>
+            </ul>
           </nav>
 
           {/* Mobile menu footer */}
