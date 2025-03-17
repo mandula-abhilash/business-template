@@ -1,28 +1,19 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
-import dynamic from "next/dynamic";
+import { Suspense, useMemo, lazy } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { features, services, achievements } from "@/config/site";
 
-// Dynamically import non-critical sections
-const FeaturesSection = dynamic(
-  () => import("@/components/sections/features"),
-  {
-    loading: () => <div className="min-h-[200px]" />,
-    // ssr: false,
-  }
-);
+// Lazy load non-critical sections
+const FeaturesSection = lazy(() => import("@/components/sections/features"));
+const ServicesSection = lazy(() => import("@/components/sections/services"));
 
-const ServicesSection = dynamic(
-  () => import("@/components/sections/services"),
-  {
-    loading: () => <div className="min-h-[200px]" />,
-    ssr: false,
-  }
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="min-h-[200px] animate-pulse bg-muted rounded-lg" />
 );
 
 export default function Home() {
@@ -74,8 +65,7 @@ export default function Home() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               priority
               quality={75}
-              loading="eager" // Add this for above-the-fold hero image
-              fetchPriority="high" // Add this
+              loading="eager"
             />
           </div>
         </div>
@@ -102,12 +92,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Lazy load non-critical sections */}
-      <Suspense fallback={<div className="min-h-[200px]" />}>
+      {/* Lazy load non-critical sections with Suspense */}
+      <Suspense fallback={<LoadingFallback />}>
         <ServicesSection services={memoizedData.services} />
       </Suspense>
 
-      <Suspense fallback={<div className="min-h-[200px]" />}>
+      <Suspense fallback={<LoadingFallback />}>
         <FeaturesSection features={memoizedData.features} />
       </Suspense>
 

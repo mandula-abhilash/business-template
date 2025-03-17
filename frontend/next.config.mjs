@@ -77,33 +77,6 @@ const nextConfig = {
     ];
   },
 
-  // Optimize build output
-  poweredByHeader: false,
-  generateEtags: true,
-
-  // Experimental features
-  experimental: {
-    // Enable optimized package imports
-    optimizePackageImports: [
-      "lucide-react",
-      "react-icons",
-      "date-fns",
-      "framer-motion",
-    ],
-
-    // Enable server actions with proper configuration
-    serverActions: {
-      bodySizeLimit: "2mb",
-      allowedOrigins: ["localhost:3000"],
-    },
-
-    // Enable improved tree-shaking
-    optimizeCss: true,
-
-    // Enable improved code splitting
-    optimizeServerReact: true,
-  },
-
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
     // Production optimizations
@@ -161,6 +134,29 @@ const nextConfig = {
     }
 
     return config;
+  },
+
+  // Experimental features
+  experimental: {
+    // Enable optimized package imports
+    optimizePackageImports: [
+      "lucide-react",
+      "react-icons",
+      "date-fns",
+      "framer-motion",
+    ],
+
+    // Enable server actions with proper configuration
+    serverActions: {
+      bodySizeLimit: "2mb",
+      allowedOrigins: ["localhost:3000"],
+    },
+
+    // Enable improved tree-shaking
+    optimizeCss: true,
+
+    // Enable improved code splitting
+    optimizeServerReact: true,
   },
 };
 

@@ -6,11 +6,11 @@ import { GoogleAnalytics } from "@/lib/analytics";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-// Optimize font loading
+// Optimize font loading with display: swap for faster initial render
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "optional", // Change from "swap" to "optional"
+  display: "swap",
   preload: true,
 });
 
@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
+// Pre-compute metadata to avoid runtime computation
 export const metadata = {
   ...siteConfig.metadata,
   metadataBase: new URL(siteConfig.url),
@@ -41,6 +42,7 @@ export const metadata = {
   },
 };
 
+// Pre-compute JSON-LD to avoid runtime computation
 export const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -68,9 +70,11 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Defer non-critical scripts */}
         <GoogleAnalytics measurementId={siteConfig.analytics.googleId} />
       </head>
       <body className="antialiased min-h-screen bg-background text-foreground flex flex-col">
