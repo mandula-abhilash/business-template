@@ -8,12 +8,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { features, services, achievements } from "@/config/site";
 
-// Dynamically import non-critical sections with loading fallbacks
 const FeaturesSection = dynamic(
   () => import("@/components/sections/features"),
   {
     loading: () => <LoadingSection />,
-    ssr: false, // Disable SSR for these components since they're below the fold
+    ssr: false,
   }
 );
 
@@ -25,7 +24,6 @@ const ServicesSection = dynamic(
   }
 );
 
-// Loading fallback component with skeleton UI
 const LoadingSection = () => (
   <div className="py-24 sm:py-32">
     <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -44,7 +42,6 @@ const LoadingSection = () => (
 );
 
 export default function Home() {
-  // Memoize data to prevent recalculations
   const memoizedData = useMemo(
     () => ({
       features,
@@ -56,7 +53,6 @@ export default function Home() {
 
   return (
     <div className="relative">
-      {/* Hero section - Critical content */}
       <div className="relative isolate overflow-hidden">
         <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
           <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-secondary opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
@@ -98,10 +94,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Stats section */}
       <div className="relative -mt-12 sm:mt-0">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 py-4 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
+          <dl className="mx-auto grid max-w-2xl grid-cols-1 py-4 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {memoizedData.achievements.map((achievement) => (
               <div
                 key={achievement.label}
@@ -115,11 +110,10 @@ export default function Home() {
                 </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </div>
 
-      {/* Dynamically loaded sections with Suspense boundaries */}
       <Suspense fallback={<LoadingSection />}>
         <ServicesSection services={memoizedData.services} />
       </Suspense>
@@ -128,7 +122,6 @@ export default function Home() {
         <FeaturesSection features={memoizedData.features} />
       </Suspense>
 
-      {/* CTA section */}
       <div className="relative isolate mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
         <div className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 transform-gpu overflow-hidden opacity-30 blur-3xl">
           <div className="ml-[max(50%,38rem)] aspect-[1313/771] w-[82.0625rem] bg-gradient-to-tr from-primary to-secondary" />
