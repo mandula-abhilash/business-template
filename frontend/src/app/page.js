@@ -1,19 +1,46 @@
 "use client";
 
-import { Suspense, useMemo, lazy } from "react";
+import { Suspense, useMemo } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { features, services, achievements } from "@/config/site";
 
-// Lazy load non-critical sections
-const FeaturesSection = lazy(() => import("@/components/sections/features"));
-const ServicesSection = lazy(() => import("@/components/sections/services"));
+// Dynamically import non-critical sections with loading fallbacks
+const FeaturesSection = dynamic(
+  () => import("@/components/sections/features"),
+  {
+    loading: () => <LoadingSection />,
+    ssr: false, // Disable SSR for these components since they're below the fold
+  }
+);
 
-// Loading fallback component
-const LoadingFallback = () => (
-  <div className="min-h-[200px] animate-pulse bg-muted rounded-lg" />
+const ServicesSection = dynamic(
+  () => import("@/components/sections/services"),
+  {
+    loading: () => <LoadingSection />,
+    ssr: false,
+  }
+);
+
+// Loading fallback component with skeleton UI
+const LoadingSection = () => (
+  <div className="py-24 sm:py-32">
+    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl lg:text-center space-y-4">
+        <div className="h-8 w-32 bg-muted rounded-lg animate-pulse" />
+        <div className="h-12 w-full bg-muted rounded-lg animate-pulse" />
+        <div className="h-20 w-full bg-muted rounded-lg animate-pulse" />
+      </div>
+      <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-64 bg-muted rounded-xl animate-pulse" />
+        ))}
+      </div>
+    </div>
+  </div>
 );
 
 export default function Home() {
@@ -92,12 +119,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Lazy load non-critical sections with Suspense */}
-      <Suspense fallback={<LoadingFallback />}>
+      {/* Dynamically loaded sections with Suspense boundaries */}
+      <Suspense fallback={<LoadingSection />}>
         <ServicesSection services={memoizedData.services} />
       </Suspense>
 
-      <Suspense fallback={<LoadingFallback />}>
+      <Suspense fallback={<LoadingSection />}>
         <FeaturesSection features={memoizedData.features} />
       </Suspense>
 
