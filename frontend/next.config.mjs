@@ -6,34 +6,47 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable SWC minification for better performance
+  swcMinify: true,
+
+  // Optimize images
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-    ],
+    domains: ["images.unsplash.com"],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
   },
 
-  // Enable React strict mode for better performance and debugging
+  // Enable React strict mode
   reactStrictMode: true,
 
   // Enable compression
   compress: true,
 
-  // Enable source maps in production for better debugging
-  productionBrowserSourceMaps: true,
+  // Experimental optimizations
+  experimental: {
+    // Enable optimized package imports
+    optimizePackageImports: ["lucide-react"],
 
-  // Reduce bundle size in production
+    // Enable modern JavaScript features
+    modern: true,
+
+    // Enable granular chunks
+    granularChunks: true,
+
+    // Enable server components
+    serverComponents: true,
+
+    // Enable concurrent features
+    concurrentFeatures: true,
+  },
+
+  // Optimize webpack configuration
   webpack: (config, { dev, isServer }) => {
-    // Production optimizations only
+    // Production optimizations
     if (!dev && !isServer) {
-      // Split chunks more aggressively
+      // Optimize chunks
       config.optimization.splitChunks = {
         chunks: "all",
         minSize: 20000,
@@ -55,44 +68,11 @@ const nextConfig = {
         },
       };
 
-      // Add Terser optimization
+      // Enable terser minification
       config.optimization.minimize = true;
     }
+
     return config;
-  },
-
-  // Experimental features
-  experimental: {
-    optimizePackageImports: ["lucide-react"],
-    turbo: {
-      loaders: {
-        "@next/font/google": ["@next/font/google"],
-      },
-    },
-  },
-
-  // Security headers
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; font-src 'self' data:;",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
-          },
-          {
-            key: "Cross-Origin-Opener-Policy",
-            value: "same-origin",
-          },
-        ],
-      },
-    ];
   },
 };
 

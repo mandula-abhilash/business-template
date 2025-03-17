@@ -1,20 +1,44 @@
 "use client";
 
-import { lazy, Suspense } from "react";
+import { Suspense, useMemo } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { features, achievements, services } from "@/config/site";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { features, services, achievements } from "@/config/site";
 
-// Lazy load non-critical sections
-const FeaturesSection = lazy(() => import("@/components/sections/features"));
-const ServicesSection = lazy(() => import("@/components/sections/services"));
+// Dynamically import non-critical sections
+const FeaturesSection = dynamic(
+  () => import("@/components/sections/features"),
+  {
+    loading: () => <div className="min-h-[200px]" />,
+    ssr: false,
+  }
+);
+
+const ServicesSection = dynamic(
+  () => import("@/components/sections/services"),
+  {
+    loading: () => <div className="min-h-[200px]" />,
+    ssr: false,
+  }
+);
 
 export default function Home() {
+  // Memoize data to prevent recalculations
+  const memoizedData = useMemo(
+    () => ({
+      features,
+      services: services.slice(0, 3),
+      achievements,
+    }),
+    []
+  );
+
   return (
     <div className="relative">
-      {/* Hero section */}
+      {/* Hero section - Critical content */}
       <div className="relative isolate overflow-hidden">
         <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
           <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-secondary opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
@@ -27,8 +51,7 @@ export default function Home() {
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               We help businesses scale and succeed in the digital age with
-              comprehensive strategies, innovative solutions, and expert
-              guidance.
+              comprehensive strategies and expert guidance.
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Button asChild size="lg">
@@ -41,6 +64,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
+
           <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative h-[400px] w-full">
             <Image
               src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
@@ -49,7 +73,7 @@ export default function Home() {
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               priority
-              loading="eager"
+              quality={75}
             />
           </div>
         </div>
@@ -59,7 +83,7 @@ export default function Home() {
       <div className="relative -mt-12 sm:mt-0">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 py-4 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
-            {achievements.map((achievement) => (
+            {memoizedData.achievements.map((achievement) => (
               <div
                 key={achievement.label}
                 className="flex flex-col items-center gap-y-3 rounded-2xl bg-card p-8 text-center shadow-lg"
@@ -76,13 +100,13 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Lazy loaded sections */}
+      {/* Lazy load non-critical sections */}
       <Suspense fallback={<div className="min-h-[200px]" />}>
-        <ServicesSection services={services.slice(0, 3)} />
+        <ServicesSection services={memoizedData.services} />
       </Suspense>
 
       <Suspense fallback={<div className="min-h-[200px]" />}>
-        <FeaturesSection features={features} />
+        <FeaturesSection features={memoizedData.features} />
       </Suspense>
 
       {/* CTA section */}
@@ -94,7 +118,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Ready to transform your business?
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
             Let's work together to achieve your business goals. Contact us today
             to get started.
           </p>
