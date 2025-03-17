@@ -13,7 +13,7 @@ const FeaturesSection = dynamic(
   () => import("@/components/sections/features"),
   {
     loading: () => <div className="min-h-[200px]" />,
-    ssr: false,
+    // ssr: false,
   }
 );
 
@@ -74,6 +74,8 @@ export default function Home() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               priority
               quality={75}
+              loading="eager" // Add this for above-the-fold hero image
+              fetchPriority="high" // Add this
             />
           </div>
         </div>

@@ -1,10 +1,6 @@
 "use client";
 
 export function GoogleAnalytics({ measurementId }) {
-  if (process.env.NODE_ENV !== "production") {
-    return null;
-  }
-
   return (
     <>
       <script
@@ -17,7 +13,8 @@ export function GoogleAnalytics({ measurementId }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${measurementId}');
+            gtag('config', '${measurementId}', { 'send_page_view': false });
+            gtag('event', 'page_view');
           `,
         }}
       />

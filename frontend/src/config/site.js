@@ -31,7 +31,7 @@ export const siteConfig = {
     },
   },
   analytics: {
-    googleId: "G-XXXXXXXXXX",
+    googleId: "G-EFD9R5SRRQ",
   },
 };
 
