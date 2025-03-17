@@ -9,7 +9,6 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig = {
   // Enable image optimization
   images: {
-    domains: ["images.unsplash.com"], // Add this line for compatibility
     remotePatterns: [
       {
         protocol: "https",
