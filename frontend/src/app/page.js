@@ -69,11 +69,14 @@ export default function Home() {
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Button asChild size="lg">
-                <Link href="/contact">Get Started</Link>
+                <Link href="/contact">
+                  Get Started with Business Transformation
+                </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <Link href="/services">
-                  View Services <ArrowRight className="ml-2 h-4 w-4" />
+                  Explore Our Business Services{" "}
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
@@ -82,7 +85,7 @@ export default function Home() {
           <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow relative h-[400px] w-full">
             <Image
               src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-              alt="Business team working"
+              alt="Business team collaborating in a modern office environment"
               className="rounded-2xl shadow-2xl object-cover"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
@@ -136,10 +139,10 @@ export default function Home() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Button asChild size="lg">
-              <Link href="/contact">Get Started</Link>
+              <Link href="/contact">Start Your Business Transformation</Link>
             </Button>
             <Button variant="outline" asChild size="lg">
-              <Link href="/about">Learn More</Link>
+              <Link href="/about">Learn More About Our Company</Link>
             </Button>
           </div>
         </div>
